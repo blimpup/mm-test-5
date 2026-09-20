@@ -1,2 +1,13 @@
+# No step joins an action run that is already going.  The config builder step,
+# the indexer step and the plan each get an action run of their own.
+batch_runs:
+  merge_steps: none
+
+config_builder:
+  enabled: true
+  script: |
+    #! /usr/bin/env bash
+    echo '{"indexer": {"enabled": true}}'
+
 engine:
   name: tofu
