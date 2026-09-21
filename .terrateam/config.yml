@@ -1,2 +1,16 @@
+cost_estimation:
+  enabled: false
 engine:
   name: tofu
+# The [run] step that names a program which does not exist is what makes the apply fail, which is
+# the point of this test.  The [init] and [apply] steps after it never execute, but they must be in
+# the list: an [apply] list with no [apply] step makes the whole repo config invalid, and then the
+# test gets a config error instead of the "Could not find program to run" it waits for.
+workflows:
+- apply:
+  - cmd:
+    - this-program-does-not-exist
+    type: run
+  - type: init
+  - type: apply
+  tag_query: ''
