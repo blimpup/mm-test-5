@@ -1,3 +1,7 @@
+dirs:
+  app:
+    when_modified:
+      depends_on: "db.host in outputs:db"
 engine:
   name: tofu
   outputs:
