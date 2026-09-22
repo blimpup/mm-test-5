@@ -1,2 +1,16 @@
+cost_estimation:
+  enabled: false
 engine:
   name: tofu
+# The [run] step that names a program which does not exist is what makes the plan fail, which is the
+# point of this test.  The [init] and [plan] steps after it never execute, but they must be in the
+# list: a [plan] list with no [plan] step makes the whole repo config invalid, and then the test gets
+# a config error instead of the plan output it waits for.
+workflows:
+- plan:
+  - cmd:
+    - this-program-does-not-exist
+    type: run
+  - type: init
+  - type: plan
+  tag_query: ''
